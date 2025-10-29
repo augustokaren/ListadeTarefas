@@ -145,18 +145,28 @@ li span {
 /* ==========================
    AJUSTES PARA CELULAR
    ========================== */
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .container {
+    width: 100%;
     padding: 20px 16px;
     border-radius: 12px;
   }
 
+  /* Faz input e botão ficarem um embaixo do outro */
   .input-area {
     flex-direction: column;
+    gap: 10px;
+  }
+
+  input {
+    width: 100%;
+    font-size: 1rem;
   }
 
   button {
     width: 100%;
+    font-size: 1rem;
+    padding: 12px;
   }
 
   li {

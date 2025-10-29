@@ -1,60 +1,117 @@
-/* ... (Seu código CSS anterior) ... */
-
-/* Estilo para cada item da lista (li) - USANDO FLEXBOX */
-ul li {
-    background-color: #F4F0EA;
-    color: #331F19;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    
-    /* NOVO: Flexbox para alinhar o texto da tarefa e os botões */
-    display: flex;
-    justify-content: space-between; /* Espaça o texto e os botões */
-    align-items: center; /* Alinha verticalmente */
+/* style.css */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
 }
 
-/* Container específico para os botões dentro do item */
+body {
+  background: linear-gradient(135deg, #141e30, #243b55);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  font-size: 1rem;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #00c853;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #00e676;
+}
+
+ul {
+  list-style: none;
+  margin-top: 10px;
+  text-align: left;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
 .botoes-acao {
-    display: flex;
-    gap: 8px; /* Espaço entre os botões Editar e Excluir */
+  display: flex;
+  gap: 5px;
 }
 
-/* Estilo para os novos botões de ação */
 .btn-acao {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 0.9em;
-    transition: background-color 0.3s ease;
-    /* Remove a margem superior desnecessária do botão global */
-    margin-top: 0; 
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: 0.3s;
 }
 
-/* Estilo específico para o botão Excluir */
-.btn-excluir {
-    background-color: #e74c3c; /* Vermelho */
-    color: white;
-}
-.btn-excluir:hover {
-    background-color: #c0392b;
-}
-
-/* Estilo específico para o botão Editar */
 .btn-editar {
-    background-color: #f39c12; /* Laranja */
-    color: white;
-}
-.btn-editar:hover {
-    background-color: #e67e22;
+  background-color: #0288d1;
+  color: #fff;
 }
 
-/* Para garantir que o texto da tarefa não encolha */
-ul li span {
-    flex-grow: 1;
-    text-align: left;
-    margin-right: 15px;
-    word-break: break-word; /* Garante que tarefas longas quebrem a linha */
+.btn-editar:hover {
+  background-color: #03a9f4;
+}
+
+.btn-excluir {
+  background-color: #d32f2f;
+  color: #fff;
+}
+
+.btn-excluir:hover {
+  background-color: #f44336;
+}
+
+#mensagem {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #ffeb3b;
 }

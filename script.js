@@ -1,99 +1,66 @@
-// ==========================================
-// 1. Função Principal: Adicionar Tarefa
-// ==========================================
+// script.js
 
-function adicionarTarefa() {
-    let inputTarefa = document.getElementById("inputTarefa");
-    // .trim() remove espaços em branco no início/fim, garantindo validação limpa
-    let tarefaTexto = inputTarefa.value.trim(); 
-    let mensagemElement = document.getElementById("mensagem");
+document.addEventListener("DOMContentLoaded", function () {
+  const inputTarefa = document.getElementById("inputTarefa");
+  const btnAdicionar = document.getElementById("btnAdicionar");
+  const listaTarefas = document.getElementById("listaTarefas");
+  const mensagem = document.getElementById("mensagem");
 
-    // 1. Validação
+  btnAdicionar.addEventListener("click", adicionarTarefa);
+  inputTarefa.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") adicionarTarefa();
+  });
+
+  function adicionarTarefa() {
+    const tarefaTexto = inputTarefa.value.trim();
     if (!tarefaTexto) {
-        mensagemElement.textContent = "Por favor, insira uma tarefa válida!";
-        return;
+      mensagem.textContent = "Por favor, insira uma tarefa válida!";
+      return;
     }
 
-    // 2. Criação dos Elementos HTML
-    let listaTarefas = document.getElementById("listaTarefas");
-    let novaTarefa = document.createElement("li");
-    
-    // NOVO: Cria um SPAN. Este elemento serve como um ENVOLTÓRIO exclusivo para o texto.
-    // Ele é essencial para:
-    // 1. Ser o alvo direto da função de edição (editarTarefa).
-    // 2. Controlar o layout dentro do Flexbox, garantindo que o texto ocupe o espaço e empurre os botões para a direita.
-    let spanTexto = document.createElement("span"); 
-    spanTexto.textContent = tarefaTexto;
-    
-    // Cria um contêiner DIV para agrupar os botões (melhora a organização e o espaçamento via Flexbox no CSS)
-    let botoesAcao = document.createElement("div");
-    botoesAcao.className = "botoes-acao";
+    const li = document.createElement("li");
+    const span = document.createElement("span");
+    span.textContent = tarefaTexto;
 
-    // Cria o botão EDITAR
-    let btnEditar = document.createElement("button");
+    const botoes = document.createElement("div");
+    botoes.classList.add("botoes-acao");
+
+    const btnEditar = document.createElement("button");
     btnEditar.textContent = "Editar";
-    btnEditar.className = "btn-acao btn-editar";
-    // O evento de clique chama editarTarefa() e PASSA o 'spanTexto' como argumento.
-    // Isso garante que apenas o texto, e não o LI inteiro, seja alvo da edição.
-    btnEditar.onclick = function() { editarTarefa(spanTexto, novaTarefa); };
+    btnEditar.classList.add("btn-acao", "btn-editar");
+    btnEditar.addEventListener("click", () => editarTarefa(span));
 
-    // Cria o botão EXCLUIR
-    let btnExcluir = document.createElement("button");
+    const btnExcluir = document.createElement("button");
     btnExcluir.textContent = "Excluir";
-    btnExcluir.className = "btn-acao btn-excluir";
-    // O evento de clique chama excluirTarefa() e PASSA o elemento 'novaTarefa' (o LI inteiro)
-    btnExcluir.onclick = function() { excluirTarefa(novaTarefa); };
+    btnExcluir.classList.add("btn-acao", "btn-excluir");
+    btnExcluir.addEventListener("click", () => excluirTarefa(li));
 
-    // 3. Montagem da Estrutura (DOM)
-    // Conecta os botões ao seu contêiner (div)
-    botoesAcao.appendChild(btnEditar);
-    botoesAcao.appendChild(btnExcluir);
-    
-    // Conecta o texto (span) e o contêiner de botões (div) ao item da lista (li)
-    novaTarefa.appendChild(spanTexto); 
-    novaTarefa.appendChild(botoesAcao);
-    
-    // Conecta o item da lista (li) ao UL principal
-    listaTarefas.appendChild(novaTarefa);
+    botoes.append(btnEditar, btnExcluir);
+    li.append(span, botoes);
+    listaTarefas.append(li);
 
-    // 4. Limpeza e Feedback
-    inputTarefa.value = ""; 
-    mensagemElement.textContent = "Tarefa adicionada com sucesso!";
-}
+    inputTarefa.value = "";
+    mensagem.textContent = "Tarefa adicionada com sucesso!";
+  }
 
-// ==========================================
-// 2. Funções de Ação
-// ==========================================
+  function excluirTarefa(li) {
+    li.remove();
+    mensagem.textContent = "Tarefa excluída!";
+  }
 
-/**
- * Remove o elemento LI (item da lista) do DOM.
- * @param {HTMLElement} itemTarefa - O elemento <li> a ser removido.
- */
-function excluirTarefa(itemTarefa) {
-    // A função .remove() é o método mais simples para remover um elemento
-    itemTarefa.remove();
-    document.getElementById("mensagem").textContent = "Tarefa excluída!";
-}
-
-/**
- * Permite que o usuário edite o texto da tarefa, modificando apenas o SPAN.
- * @param {HTMLElement} spanTexto - O elemento <span> que contém o texto da tarefa (o alvo da edição).
- * @param {HTMLElement} itemTarefa - O elemento <li> pai da tarefa (não usado, mas útil para referência).
- */
-function editarTarefa(spanTexto, itemTarefa) {
-    // 1. Pede ao usuário o novo texto. O texto atual é o valor padrão do prompt.
-    let novoTexto = prompt("Edite a tarefa:", spanTexto.textContent);
-
-    // 2. Validação e atualização
-    if (novoTexto !== null && novoTexto.trim() !== "") {
-        // Atualiza apenas o conteúdo do SPAN
-        spanTexto.textContent = novoTexto.trim(); 
-        document.getElementById("mensagem").textContent = "Tarefa editada com sucesso!";
-    } else if (novoTexto !== null) {
-        // Se o usuário apertar OK com o campo vazio
-        document.getElementById("mensagem").textContent = "Edição cancelada ou campo vazio.";
-    } else {
-        // Se o usuário apertar Cancelar (novoTexto === null)
-        document.getElementById("mensagem").textContent = "Edição cancelada.";
+  function editarTarefa(span) {
+    const novoTexto = prompt("Edite a tarefa:", span.textContent);
+    if (novoTexto === null) {
+      mensagem.textContent = "Edição cancelada.";
+      return;
     }
-}
+
+    if (novoTexto.trim() === "") {
+      mensagem.textContent = "Campo vazio. Nenhuma alteração feita.";
+      return;
+    }
+
+    span.textContent = novoTexto.trim();
+    mensagem.textContent = "Tarefa editada com sucesso!";
+  }
+});
